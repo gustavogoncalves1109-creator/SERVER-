@@ -1,0 +1,19 @@
+{
+  "name": "Snoopy",
+  "version": "1.0.0",
+  "main": "server1.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server1.js"
+  },
+  "keywords": [],
+  "author": "Melissa do Prado Anastacio",
+  "license": "ISC",
+  "description": "Site sobre personagem conectado com API GROQ",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.3",
+    "express": "^5.2.1"
+  }
+}

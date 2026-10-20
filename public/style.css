@@ -640,3 +640,134 @@ footer {
     max-width: 420px;
     min-height: 24px;
 }
+
+/*======================================================================================================= */
+/* Configurado para celular (moto G4)*/
+
+@media (max-width: 768px) {
+    .container-principal,
+    .outros-container,
+    .turma_snoopy {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center;
+        width: 100%;
+        padding: 110px 20px 30px !important;
+        gap: 20px;
+    }
+    /* Containers de cadastro e login */
+    .container,
+    .container1,
+    .chatContainer {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        margin: 15px auto !important;
+        box-sizing: border-box;
+    }
+    /* Blocos de texto e balões */
+    .esquerdo,
+    .direito,
+    .balao,
+    .bloco-balao {
+        position: static !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        margin: 15px 0 !important;
+        transform: none !important;
+        align-items: center;
+    }
+    .titulo {
+        font-size: 3rem !important;
+        text-align: center;
+        letter-spacing: 2px;
+    }
+    .subtítulo {
+        font-size: 1.4rem !important;
+        text-align: center;
+    }
+    /* Imagem principal  */
+    .front {
+        position: static !important;
+        display: block;
+        width: 100% !important;
+        max-width: 350px !important;
+        height: auto !important;
+        margin: 15px auto !important;
+        transform: none !important;
+    }
+    .vitrine {
+        display: grid;
+        grid-template-columns: 1fr;
+        width: 100%;
+        padding: 110px 15px 30px !important;
+        gap: 20px;
+    }
+    .Turma_do_Charlie_Brown,
+    .card {
+        position: static !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        margin: 15px 0 !important;
+        transform: none !important;
+        box-sizing: border-box;
+    }
+    /* Imagens dos personagens */
+    .turma-do-charlie-brown,
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+        object-fit: contain;
+    }
+    .turma-do-charlie-brown {
+        max-height: 400px;
+    }
+    .menu {
+        padding: 15px 5px;
+    }
+    .link {
+        display: inline-block;
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+        margin: 5px 8px;
+    }
+    .h2 {
+        font-size: 1.8rem;
+        padding: 15px;
+    }
+    .chatContainer {
+        min-height: 60vh;
+        margin: 15px auto !important;
+    }
+    #caixaChat {
+        padding: 12px;
+    }
+    .msg {
+        max-width: 90%;
+        overflow-wrap: anywhere;
+    }
+    #inputArea {
+        padding: 10px;
+        gap: 8px;
+    }
+    #mensagem {
+        min-width: 0;
+    }
+    #btnEnviar {
+        padding: 10px 14px;
+    }
+    .btn,
+    .btn-chat,
+    .btn-cadastro,
+    .btn-enviar {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+    footer {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}

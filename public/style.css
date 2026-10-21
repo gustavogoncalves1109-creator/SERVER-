@@ -563,7 +563,7 @@ footer {
 .titulo-login {
     font-family: 'Bangers', cursive;
     color: #f3a63b; /* Laranja Peanuts */
-    font-size: 2.5rem;
+    font-size: 3rem;
     letter-spacing: 2px;
     text-align: center;
     text-shadow: 2px 2px 0px #5a504e;
@@ -653,14 +653,14 @@ footer {
         align-items: center !important;
         justify-content: center;
         width: 100%;
-        padding: 110px 20px 30px !important;
+        padding: 10px 10px 30px !important;
         gap: 20px;
     }
     /* Containers de cadastro e login */
     .container,
     .container1,
     .chatContainer {
-        width: 100% !important;
+        width: 90% !important;
         max-width: 100% !important;
         height: auto !important;
         margin: 15px auto !important;
@@ -684,8 +684,21 @@ footer {
         text-align: center;
         letter-spacing: 2px;
     }
+    
+    .titulo-login {
+        font-size: 2rem !important;
+        text-align: center;
+        letter-spacing: 2px;
+    }
+    
+    .titulo-cadastro {
+        font-size: 2rem !important;
+        text-align: center;
+        letter-spacing: 2px;
+    }
+    
     .subtítulo {
-        font-size: 1.4rem !important;
+        font-size: 1.0rem !important;
         text-align: center;
     }
     /* Imagem principal  */
@@ -695,14 +708,14 @@ footer {
         width: 100% !important;
         max-width: 350px !important;
         height: auto !important;
-        margin: 15px auto !important;
+        margin: 1px auto !important;
         transform: none !important;
     }
     .vitrine {
         display: grid;
         grid-template-columns: 1fr;
         width: 100%;
-        padding: 110px 15px 30px !important;
+        padding: 1px 15px 30px !important;
         gap: 20px;
     }
     .Turma_do_Charlie_Brown,
@@ -735,9 +748,10 @@ footer {
         margin: 5px 8px;
     }
     .h2 {
-        font-size: 1.8rem;
+        font-size: 1.0rem;
         padding: 15px;
     }
+
     .chatContainer {
         min-height: 60vh;
         margin: 15px auto !important;
@@ -757,7 +771,7 @@ footer {
         min-width: 0;
     }
     #btnEnviar {
-        padding: 10px 14px;
+        padding: 8px 12px;
     }
     .btn,
     .btn-chat,

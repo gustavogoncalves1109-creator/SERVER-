@@ -1,90 +1,145 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>chat</title>
+    <title>Chat</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-
+<header>
     <nav class="menu">
-        <a class="link" href="index.html">Home</a>
-        <a class="link" href="galeria.html">Galeria</a>
-        <a class="link" href="chat.html">Chat</a>
-        <a class="link" href="cadastro.html">Cadastro</a>
-        <a class="link" href="login.html">Login</a>
+        <a href="index.html" class="link-menu">Home</a>
+        <a href="galeria.html" class="link-menu">galeria</a>
+        <a href="chat.html" class="link-menu">Chat</a>
+        <a href="cadastro.html" class="link-menu">Cadastro</a>
+        <a href="login.html" class="link-menu">Login</a>
     </nav>
+</header>
 
-<div class="chatContainer">
-   <div class="h2">
-    <h2 id="boasVindas">Seja bem-vindo ao Chat</h2>
-   </div>
-    <div id="caixaChat"></div>
+<main>
+    <div class="container-chat">
 
-    <div id="inputArea">
-        <input type="text" id="mensagem" placeholder="Digite sua mensagem">
-        <button id="btnEnviar">Enviar</button>
+    <h2 id="boasVindas"></h2>
 
+    <div class="janela-mensagens">
+        <div id="caixaChat"></div>
     </div>
+
+    <form class="formulario-envio" id="formularioChat">
+        <input
+            type="text"
+            id="mensagem"
+            placeholder="Digite sua mensagem..."
+        >
+
+        <button type="submit" id="btnEnviar">
+            Enviar
+        </button>
+    </form>
+
 </div>
 
+</main>
+
 <script>
-const usuarioLogado= localStorage.getItem('usuario')
+   
+const usuarioLogado = localStorage.getItem('usuario') || 'Aventureiro';
 
-document.querySelector('#boasVindas').textContent=`Olá ${usuarioLogado}, seja bem vindo`
-const caixaChat=document.querySelector('#caixaChat')
-const inputMensagem=document.querySelector('#mensagem')
-const btnEnviar=document.querySelector('#btnEnviar')
+const boasVindas = document.querySelector('#boasVindas');
+const caixaChat = document.querySelector('#caixaChat');
+const formularioChat = document.querySelector('#formularioChat');
+const inputMensagem = document.querySelector('#mensagem');
+const btnEnviar = document.querySelector('#btnEnviar');
 
-const historicoConversa=[ ]
+boasVindas.textContent = `Olá, ${usuarioLogado}! Seja bem-vindo ao chat da Frieren.`;
 
-function mensagemTela (autor, texto){
 
-    const textoFinal=document.createElement('p')
-    textoFinal.className='msg'
-    textoFinal.textContent=`${autor}, ${texto}`
-    caixaChat.appendChild(textoFinal)}
+const historicoConversa = [];
 
-btnEnviar.addEventListener('click', async()=>{
-    const textoMensagem=inputMensagem.value.trim()
+function mensagemTela(autor, texto) {
+    const elemento = document.createElement('p');
 
-    if (!textoMensagem)return
+    elemento.className = 'msg';
+    elemento.textContent = `${autor}: ${texto}`;
 
-    mensagemTela(usuarioLogado, textoMensagem)
-    historicoConversa.push({role:"user", content:textoMensagem})
+    caixaChat.appendChild(elemento);
 
-    inputMensagem.value=''
-    btnEnviar.disabled=true
+    
+    caixaChat.scrollTop = caixaChat.scrollHeight;
+}
 
-    try{
-        const respostaServidor= await fetch('/chat', {
-            method:'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ historico: historicoConversa})
-        })
 
-        const dados=  await respostaServidor.json()
+formularioChat.addEventListener('submit', async (evento) => {
+    evento.preventDefault();
+
+    const textoMensagem = inputMensagem.value.trim();
+
+    if (!textoMensagem || btnEnviar.disabled) {
+        return;
+    }
+
+    mensagemTela(usuarioLogado, textoMensagem);
+
+    historicoConversa.push({
+        role: 'user',
+        content: textoMensagem
+    });
+
+    inputMensagem.value = '';
+    btnEnviar.disabled = true;
+
+    try {
+        const respostaServidor = await fetch('/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                historico: historicoConversa
+            })
+        });
+
+        const dados = await respostaServidor.json();
+
         if (!respostaServidor.ok) {
+            mensagemTela(
+                'Sistema',
+                dados.erro || `Erro do servidor (${respostaServidor.status}).`
+            );
+            return;
+        }
 
        
-        mensagemTela('system',dados.erro )
-        return}
+        mensagemTela('Frieren', dados.resposta);
 
-        mensagemTela('Snoppy',dados.resposta )
-    }
-    catch(erro){
-        mensagemTela('Sistema', 'Erro ao conectar com o servidor')
-    }
-    finally{
-        btnEnviar.disabled=false
-    }
+        historicoConversa.push({
+            role: 'assistant',
+            content: dados.resposta
+        });
 
-})
+    } catch (erro) {
+        console.error('Erro ao conectar ao chat:', erro);
+
+        mensagemTela(
+            'Sistema',
+            'Não foi possível conectar ao servidor. Verifique se ele está ligado.'
+        );
+    } finally {
+        btnEnviar.disabled = false;
+        inputMensagem.focus();
+    }
+});
+
+
+
 
 </script>
 
-    <footer>&copy; Desenvolvido por Melissa - 2026 Curitiba</footer>
+<footer> &copy; Desenvolvido por Gustavo Gonçalves Vieira - 2026 CEEP Curitiba</footer>
+
 </body>
 
 </html>

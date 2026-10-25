@@ -1,98 +1,143 @@
+
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <nav class="menu">
-        <a class="link" href="#">Home</a>
-        <a class="link" href="galeria.html">Galeria</a>
-        <a class="link" href="chat.html">Chat</a>
-        <a class="link" href="#">Cadastro</a>
-        <a class="link" href="login.html">Login</a>
-    </nav>
+    <!-- Cabeçalho e menu -->
+    <header>
+        <nav class="menu">
+            <a href="index.html" class="link-menu">Home</a>
+            <a href="galeria.html" class="link-menu">Galeria</a>
+            <a href="chat.html" class="link-menu">Chat</a>
+            <a href="cadastro.html" class="link-menu">Cadastro</a>
+            <a href="login.html" class="link-menu">Login</a>
+        </nav>
+    </header>
+
+    <!-- Conteúdo principal -->
+    <main>
+
+        <!-- Seção de cadastro -->
+        <section class="secao-cadastro">
+
+            <!-- Artigo contendo o formulário -->
+            <article class="card-cadastro">
+
+                <h1>Cadastro</h1>
+
+                <p class="texto-cadastro">
+                    Preencha os campos abaixo para realizar seu cadastro.
+                </p>
+
+                <!-- Formulário -->
+                <form id="formulario-cadastro">
+
+                    
+    <label for="usuario">Nome do usuário</label><br>
+    <input type="text" id="usuario" placeholder="Digite seu nome"
+    required>
     
-<div class="container"> 
-    <h1 class="titulo-cadastro">Cadastro de Usuário</h1>
 
-    <label for="usuario">Nome do usuário</label>
-    <input type="text" id="usuario" placeholder="Digite seu nome">
+    <label for="email">E-mail</label><br>
+    <input type="email" id="email" placeholder="Digite seu e-mail"
+    required>
 
-    <label for="email">E-mail</label>
-    <input type="email" id="email" placeholder="Digite seu e-mail">
+    <label for="senha">Senha</label><br>
+    <input type="password" id="senha" placeholder="Digite sua senha"
+    required>
 
-    <label for="senha">Senha</label>
-    <input type="password" id="senha" placeholder="Digite sua senha">
+    <button id="btncadastro" class="btn-cadastro">Enviar</button>
+    <div id="cadmensagem" class="cardMensagem"></div>
 
-    <div class="button-cadastro">
-        <button class="btn-cadastro" onclick="validarDados()">Cadastrar</button>
-    </div>
-</div>
+                </form>
 
-<div id="resposta"></div>
+                <!-- Resposta do servidor -->
+                <div id="resposta"></div>
 
-    <div id="resposta"></div>
+            </article>
+
+        </section>
+
+    </main>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>
+            &copy; 2026 Gustavo Gonçalves Vieira. Todos os direitos reservados.
+        </p>
+    </footer>
+
     <script>
-        async function validarDados() {
-            const usuarioEntrada = document.querySelector('#usuario');
-            const emailEntrada = document.querySelector('#email');
-            const senhaEntrada = document.querySelector('#senha');
-            const resposta = document.querySelector('#resposta');
-           
+        
+const btnCadastrar = document.querySelector('#btncadastro');
+const campoUsuario = document.querySelector('#usuario');
+const campoEmail = document.querySelector('#email');
+const campoSenha = document.querySelector('#senha');
+const mensagemCadastro = document.querySelector('#cadmensagem');
 
-            const usuarioDigitado = usuarioEntrada.value;
-            const emailDigitado = emailEntrada.value;
-            const senhaDigitada = senhaEntrada.value;
+btnCadastrar.addEventListener('click', async (evento) => {
+    evento.preventDefault();
 
-           
-            if (!usuarioDigitado || !emailDigitado || !senhaDigitada) {
-                resposta.innerText = 'Preencha todos os campos antes de enviar!';
-                resposta.style.color = 'red';
-                return;
-            }
+    const usuario = campoUsuario.value.trim();
+    const email = campoEmail.value.trim();
+    const senha = campoSenha.value;
 
-            resposta.innerText = 'Aguarde 5 segundos, cadastrando no servidor...';
-            resposta.style.color = 'orange';
-         
-            try {
-                const respostaBe = await fetch('http://localhost:5000/cadastro', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        usuario: usuarioDigitado,
-                        email: emailDigitado,
-                        senha: senhaDigitada
-                    })
-                });
+    if (!usuario || !email || !senha) {
+        mensagemCadastro.textContent = 'Preencha todos os campos!';
+        return;
+    }
 
-                const dados = await respostaBe.json();
-               
-                if (!respostaBe.ok) {
-                    resposta.innerText = `${dados.erro}`;
-                    resposta.style.color = 'red';
-                    return;
-                }
+    btnCadastrar.disabled = true;
+    mensagemCadastro.textContent = 'Criando sua conta...';
 
-                resposta.innerText = `${dados.mensagem}: ${dados.PERFIL}`;
-                resposta.style.color = 'green';
+    try {
+        const resposta = await fetch('/cadastro', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ usuario, email, senha })
+        });
 
-                usuarioEntrada.value = '';
-                emailEntrada.value = '';
-                senhaEntrada.value = '';
+        const dados = await resposta.json();
 
-            } catch (erro) {
-                console.error('Erro na requisição:', erro);
-                resposta.innerText = 'Erro ao conectar com o servidor!!';
-                resposta.style.color = 'red';
-            }
+        if (!resposta.ok) {
+            mensagemCadastro.textContent =
+                dados.erro || 'Não foi possível realizar o cadastro.';
+            return;
         }
+
+        
+        localStorage.setItem('usuario', usuario);
+
+        mensagemCadastro.textContent = 'Cadastro realizado! Entrando no chat...';
+
+        
+        window.location.href = '/chat.html';
+
+    } catch (erro) {
+        console.error('Erro no cadastro:', erro);
+        mensagemCadastro.textContent =
+            'Não foi possível conectar ao servidor.';
+    } finally {
+        btnCadastrar.disabled = false;
+    }
+});
+
+
+       
     </script>
-    
-    <footer>&copy; Desenvolvido por Melissa - 2026 - Curitiba</footer>
+
+
 
 </body>
 </html>
+

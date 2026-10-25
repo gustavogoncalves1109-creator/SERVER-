@@ -1,36 +1,74 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Frieren</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
+  <header>
     <nav class="menu">
-        <a class="link" href="#">Home</a>
-        <a class="link" href="galeria.html">Galeria</a>
-        <a class="link" href="chat.html">Chat</a>
-        <a class="link" href="cadastro.html">Cadastro</a>
-        <a class="link" href="login.html">Login</a>
+        <a href="index.html" class="link-menu">Home</a>
+        <a href="galeria.html" class="link-menu">Galeria</a>
+        <a href="chat.html" class="link-menu">Chat</a>
+        <a href="cadastro.html" class="link-menu">Cadastro</a>
+        <a href="login.html" class="link-menu">Login</a>
+
     </nav>
+  </header>
 
-    <header class="turma_snoopy">
-        <div class="esquerdo">
-            <h1 class="titulo">Snoopy</h1>
-            <p class="subtítulo"> Um cão brincalhão e imaginativo</p>
+    <header class="hero-deadpool">
+      <div class="esquerdo">
+        <h1 class="hero-titulo">FRIEREN</h1>
+        <p class="hero-subtitulo">
+          Uma elfa maga que, após derrotar o Rei Demônio, embarca em uma nova
+          jornada para compreender melhor os humanos e o valor do tempo.
+        </p>
+      </div>
+
+      <img src="./imagens/frieren2.png" alt="Frieren" class="deadpool-front" />
+
+      <div class="direito">
+        <div class="bloco-balao">
+          <p id="balao-deadpool">
+            Olá. Se quiser conhecer mais sobre magia, aventuras ou conversar um
+            pouco, clique no botão abaixo.
+          </p>
         </div>
 
-        <img class="front" src="imagens/Snoopy_Peanuts.png" alt="Snoopy">
-
-        <div class="direito">
-            <p class="balao"> Eu psiu, está me vendo?</p>
-            <a class="btn-chat" href="chat.html">Coversar no Chat</a>
-        </div>
+        <a href="chat.html" class="btn-principal">Conversar no Chat</a>
+      </div>
     </header>
-    <footer>&copy; Desenvolvido por Melissa - 2026 Curitiba</footer>
-</body>
 
+    <main class="container-principal">
+      <section class="secao-perfil">
+        <div class="perfil-moldura">
+          <img src="./imagens/Sousou-no-Frieren.jpg" alt="Frieren" class="perfil-foto" />
+        </div>
+
+        <div class="perfil-texto">
+          <h2>Quem é Frieren?</h2>
+          <p>
+            Frieren é uma elfa maga que fez parte do grupo de heróis responsável
+            por derrotar o Rei Demônio. Por viver milhares de anos, ela percebe
+            o tempo de forma diferente dos humanos e passa a valorizar as
+            lembranças e os laços que constrói ao longo de sua jornada.
+          </p>
+
+          <p>
+            Explore o site para conhecer seus companheiros, descobrir mais sobre
+            o universo de <strong>Sousou no Frieren</strong> e conversar com a
+            personagem no chat.
+          </p>
+        </div>
+      </section>
+    </main>
+
+<footer>
+    <p>&copy; 2026 Gustavo Gonçalves Vieira. Todos os direitos reservados.</p>
+</footer>
+
+  </body>
 </html>

@@ -1,94 +1,137 @@
+
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  
-    <nav class="menu">
-        <a class="link" href="index.html">Home</a>
-        <a class="link" href="galeria.html">Galeria</a>
-        <a class="link" href="chat.html">Chat</a>
-        <a class="link" href="cadastro.html">Cadastro</a>
-        <a class="link" href="#">Login</a>
-    </nav>
 
+    <!-- Cabeçalho e menu -->
+    <header>
+        <nav class="menu">
+            <a href="index.html" class="link-menu">Home</a>
+            <a href="galeria.html" class="link-menu">Galeria</a>
+            <a href="chat.html" class="link-menu">Chat</a>
+            <a href="cadastro.html" class="link-menu">Cadastro</a>
+            <a href="login.html" class="link-menu">Login</a>
+        </nav>
+    </header>
 
-<div class="container1"> 
-    <h1 class="titulo-login">Login</h1>
+    <!-- Conteúdo principal -->
+    <main>
 
-    <label for="loginemail">E-mail</label>
-    <input type="email" id="loginemail" placeholder="Digite seu e-mail">
+        <!-- Seção de login -->
+        <section class="secao-login">
 
-    <label for="loginsenha">Senha</label>
-    <input type="password" id="loginsenha" placeholder="Digite sua senha">
+            <!-- Artigo contendo o formulário -->
+            <article class="card-login">
 
-     <button id="btnLogin" class="btn-enviar">Enviar</button>
-    <div id="loginMensagem" class="container-resposta"></div>
-</div>
+                <h1>Login</h1>
+
+                <p class="texto-login">
+                    Preencha os campos abaixo para realizar seu login.
+                </p>
+
+                <!-- Formulário -->
+                <form id="formulario-login">
+
+    
+
+    <label for="email">E-mail</label><br>
+    <input type="email" id="email" placeholder="Digite seu e-mail"
+    required>
+
+    <label for="senha">Senha</label><br>
+    <input type="password" id="senha" placeholder="Digite sua senha"
+    required>
+
+    <button id="btnlogin" class="btn-login">Enviar</button>
+    <div id="loginMensagem" class="cadMensagem"></div>
+
+                </form>
+
+                <!-- Resposta do servidor -->
+                <div id="resposta"></div>
+
+            </article>
+
+        </section>
+
+    </main>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>
+            &copy; 2026 Gustavo Gonçalves Vieira. Todos os direitos reservados.
+        </p>
+    </footer>
 
     <script>
-
-        const btnLogin = document.querySelector('#btnLogin')
-        const loginMensagem=document.querySelector('#loginMensagem')
-
-        btnLogin.addEventListener('click', async () => {
-            const emailEntrada = document.querySelector('#loginemail');
-            const senhaEntrada = document.querySelector('#loginsenha');
-
-            const email = emailEntrada.value;
-            const senha = senhaEntrada.value;
-
-            if (!email || !senha) {
-                loginMensagem.innerText = 'Preencha todos os campos antes de enviar!';
-                loginMensagem.style.color = 'red';
-                return;
-            }
-
-            loginMensagem.innerText = 'Aguarde 5 segundos, logandono servidor...';
-            loginMensagem.style.color = 'green';
-         
-            try {
-                const respostaBe = await fetch('http://localhost:5000/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        email: email,
-                        senha: senha
-                    })
-                });
-
-                const dados = await respostaBe.json();
-               
-                if (!respostaBe.ok) {
-                    loginMensagem.innerText = `${dados.erro}`;
-                    loginMensagem.style.color = 'red';
-                    return;
-                }
-                
-                localStorage.setItem('usuarioLogado', dados.usuario);
-
-                msgLogin.style.color = 'green';
-                msgLogin.innerText = 'Login realizado! entrando no site...';
- 
-                setTimeout(() => {
-                    window.location.href = 'chat.html';
-                }, 1000);
-
-            } catch (erro) {
-                console.error('Erro na requisição:', erro);
-                msgLogin.style.color = 'red';
-                msgLogin.innerText = 'Erro ao conectar com o servidor!!';
-            }
-        }
-        );
         
+const btnLogin = document.querySelector('#btnLogin');
+const campoEmail = document.querySelector('#email');
+const campoSenha = document.querySelector('#senha');
+const loginMensagem = document.querySelector('#loginMensagem');
+
+btnLogin.addEventListener('click', async (evento) => {
+    evento.preventDefault();
+
+    const email = campoEmail.value.trim();
+    const senha = campoSenha.value;
+
+    if (!email || !senha) {
+        loginMensagem.textContent = 'Preencha todos os campos!';
+        return;
+    }
+
+    btnLogin.disabled = true;
+    loginMensagem.textContent = 'Verificando seus dados...';
+
+    try {
+        const resposta = await fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, senha })
+        });
+
+        const dados = await resposta.json();
+
+        if (!resposta.ok) {
+            loginMensagem.textContent =
+                dados.erro || 'E-mail ou senha incorretos.';
+            return;
+        }
+
+       
+        localStorage.setItem('usuario', dados.usuario);
+
+        loginMensagem.textContent = 'Login realizado! Entrando no chat...';
+
+        
+        window.location.href = '/chat.html';
+
+    } catch (erro) {
+        console.error('Erro no login:', erro);
+        loginMensagem.textContent =
+            'Não foi possível conectar ao servidor.';
+    } finally {
+        btnLogin.disabled = false;
+    }
+});
+
+
+       
     </script>
-    
-    <footer>&copy; Desenvolvido por Melissa - 2026 - Curitiba</footer>
+
+
 
 </body>
 </html>
+

@@ -66,6 +66,78 @@
       </section>
     </main>
 
+    
+  <!-- Janela de confirmação para acessar o chat -->
+  <div id="avisoCadastro" class="modal-cadastro" hidden>
+    <div class="modal-conteudo"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="tituloAviso">
+
+      <h2 id="tituloAviso"> Uma pequena pausa!</h2>
+
+      <p>
+        É necessário ter uma conta para acessar o chat.
+        Quer fazer o cadastro?
+      </p>
+
+      <div class="modal-botoes">
+        <button id="btnSimCadastro" type="button">
+          Sim, quero cadastrar!
+        </button>
+
+        <button id="btnNaoCadastro" type="button">
+          Não, voltar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const avisoCadastro = document.getElementById('avisoCadastro');
+    const btnSimCadastro = document.getElementById('btnSimCadastro');
+    const btnNaoCadastro = document.getElementById('btnNaoCadastro');
+
+    // Captura os links e o botão que levam ao chat.
+    const linksChat = document.querySelectorAll(
+      'a[href="chat.html"]'
+    );
+
+    linksChat.forEach((link) => {
+      link.addEventListener('click', (evento) => {
+        evento.preventDefault();
+        avisoCadastro.hidden = false;
+        btnSimCadastro.focus();
+      });
+    });
+
+    // Sim: ir para o cadastro.
+    btnSimCadastro.addEventListener('click', () => {
+      window.location.href = 'cadastro.html';
+    });
+
+    // Não: fechar o aviso e continuar na página.
+    btnNaoCadastro.addEventListener('click', () => {
+      avisoCadastro.hidden = true;
+    });
+
+    // Fechar também ao clicar fora da janela.
+    avisoCadastro.addEventListener('click', (evento) => {
+      if (evento.target === avisoCadastro) {
+        avisoCadastro.hidden = true;
+      }
+    });
+
+    // Fechar com a tecla Escape.
+    document.addEventListener('keydown', (evento) => {
+      if (evento.key === 'Escape' && !avisoCadastro.hidden) {
+        avisoCadastro.hidden = true;
+      }
+    });
+  </script>
+
+
+
 <footer>
     <p>&copy; 2026 Gustavo Gonçalves Vieira. Todos os direitos reservados.</p>
 </footer>

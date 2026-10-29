@@ -874,3 +874,210 @@ footer {
     }
 }
 
+
+/* ===== Aviso de cadastro para acessar o chat ===== */
+
+.modal-cadastro[hidden] {
+    display: none;
+}
+
+.modal-cadastro {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+    background: rgba(8, 12, 28, 0.78);
+    backdrop-filter: blur(5px);
+}
+
+.modal-conteudo {
+    width: 100%;
+    max-width: 420px;
+    padding: 30px;
+
+    color: #f1f5ff;
+    text-align: center;
+
+    background: linear-gradient(145deg, #202b4d, #11182f);
+    border: 1px solid #8b7de8;
+    border-radius: 18px;
+
+    box-shadow: 0 0 30px rgba(139, 125, 232, 0.25);
+
+    animation: aparecerAviso 0.25s ease;
+}
+
+.modal-conteudo h2 {
+    margin-top: 0;
+    color: #c4b5fd;
+}
+
+.modal-conteudo p {
+    line-height: 1.7;
+    margin-bottom: 24px;
+}
+
+.modal-botoes {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.modal-botoes button {
+    padding: 12px 16px;
+    border: 1px solid #8b7de8;
+    border-radius: 10px;
+
+    font: inherit;
+    font-weight: bold;
+    cursor: pointer;
+
+    transition: transform 0.2s, background 0.2s;
+}
+
+#btnSimCadastro {
+    color: white;
+    background: #6750a4;
+}
+
+#btnNaoCadastro {
+    color: #e0e7ff;
+    background: #293653;
+}
+
+.modal-botoes button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.15);
+}
+
+.modal-botoes button:focus-visible {
+    outline: 3px solid #c4b5fd;
+    outline-offset: 3px;
+}
+
+@keyframes aparecerAviso {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (max-width: 420px) {
+    .modal-conteudo {
+        padding: 24px 18px;
+    }
+
+    .modal-botoes {
+        flex-direction: column;
+    }
+
+    .modal-botoes button {
+        width: 100%;
+    }
+}
+
+
+/* Fundo escuro atrás da confirmação */
+.aviso-chat[hidden] {
+    display: none;
+}
+
+.aviso-chat {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+    background: rgba(10, 15, 35, 0.78);
+}
+
+/* Caixa principal */
+.conteudo-aviso-chat {
+    width: 100%;
+    max-width: 430px;
+    padding: 28px;
+
+    background: #eef6fb;
+    color: #172554;
+
+    border: 2px solid #4a90e2;
+    border-radius: 18px;
+
+    text-align: center;
+    box-shadow: 0 0 30px rgba(74, 144, 226, 0.35);
+
+    animation: aparecerAviso 0.2s ease-out;
+}
+
+.conteudo-aviso-chat h2 {
+    margin-top: 0;
+    color: #2563a6;
+}
+
+.conteudo-aviso-chat p {
+    line-height: 1.6;
+}
+
+.botoes-aviso-chat {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.botoes-aviso-chat button {
+    padding: 12px 16px;
+    border: none;
+    border-radius: 10px;
+
+    background: #4a90e2;
+    color: white;
+
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+
+    transition: transform 0.2s, background 0.2s;
+}
+
+.botoes-aviso-chat button:hover {
+    background: #2563a6;
+    transform: translateY(-2px);
+}
+
+#btnNaoChat {
+    background: #334155;
+}
+
+#btnNaoChat:hover {
+    background: #1e293b;
+}
+
+@keyframes aparecerAviso {
+    from {
+        opacity: 0;
+        transform: scale(0.94);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+

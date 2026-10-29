@@ -12,7 +12,7 @@
      <nav class="menu">
         <a href="index.html" class="link-menu">Home</a>
         <a href="galeria.html" class="link-menu">Galeria</a>
-        <a href="chat.html" class="link-menu">Chat</a>
+       <a href="#" class="link-menu abrir-aviso-chat">Chat</a>
         <a href="cadastro.html" class="link-menu">Cadastro</a>
         <a href="login.html" class="link-menu">Login</a>
     </nav>
@@ -79,6 +79,68 @@
 
     </div>
 </main>
+
+
+<!-- Aviso para acessar o chat -->
+<div id="avisoChat" class="aviso-chat" role="dialog"
+     aria-modal="true" aria-labelledby="tituloAvisoChat"
+     aria-describedby="textoAvisoChat" hidden>
+
+    <div class="conteudo-aviso-chat">
+        <h2 id="tituloAvisoChat">Um momento, aventureiro!</h2>
+
+        <p id="textoAvisoChat">
+            É necessário ter uma conta para acessar o chat.
+            Quer fazer o cadastro?
+        </p>
+
+        <div class="botoes-aviso-chat">
+            <button type="button" id="btnSimChat">
+                Sim, fazer cadastro
+            </button>
+
+            <button type="button" id="btnNaoChat">
+                Não, continuar navegando
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const avisoChat = document.querySelector('#avisoChat');
+    const btnSimChat = document.querySelector('#btnSimChat');
+    const btnNaoChat = document.querySelector('#btnNaoChat');
+
+    document.querySelectorAll('.abrir-aviso-chat').forEach(link => {
+        link.addEventListener('click', evento => {
+            evento.preventDefault();
+            avisoChat.hidden = false;
+            btnSimChat.focus();
+        });
+    });
+
+    btnSimChat.addEventListener('click', () => {
+        window.location.href = 'cadastro.html';
+    });
+
+    btnNaoChat.addEventListener('click', () => {
+        avisoChat.hidden = true;
+    });
+
+    avisoChat.addEventListener('click', evento => {
+        if (evento.target === avisoChat) {
+            avisoChat.hidden = true;
+        }
+    });
+
+    document.addEventListener('keydown', evento => {
+        if (evento.key === 'Escape' && !avisoChat.hidden) {
+            avisoChat.hidden = true;
+        }
+    });
+</script>
+
+
 
 <footer>
     <p>&copy; 2026 Gustavo Gonçalves Vieira. Todos os direitos reservados.</p>

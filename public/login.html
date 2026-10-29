@@ -11,24 +11,18 @@
 
 <body>
 
-    <!-- Cabeçalho e menu -->
     <header>
         <nav class="menu">
             <a href="index.html" class="link-menu">Home</a>
             <a href="galeria.html" class="link-menu">Galeria</a>
-            <a href="chat.html" class="link-menu">Chat</a>
+            <a href="#" class="link-menu abrir-aviso-chat">Chat</a>
             <a href="cadastro.html" class="link-menu">Cadastro</a>
             <a href="login.html" class="link-menu">Login</a>
         </nav>
     </header>
 
-    <!-- Conteúdo principal -->
     <main>
-
-        <!-- Seção de login -->
         <section class="secao-login">
-
-            <!-- Artigo contendo o formulário -->
             <article class="card-login">
 
                 <h1>Login</h1>
@@ -37,101 +31,173 @@
                     Preencha os campos abaixo para realizar seu login.
                 </p>
 
-                <!-- Formulário -->
                 <form id="formulario-login">
 
-    
+                    <label for="email">E-mail</label><br>
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Digite seu e-mail"
+                        required
+                    >
 
-    <label for="email">E-mail</label><br>
-    <input type="email" id="email" placeholder="Digite seu e-mail"
-    required>
+                    <br><br>
 
-    <label for="senha">Senha</label><br>
-    <input type="password" id="senha" placeholder="Digite sua senha"
-    required>
+                    <label for="senha">Senha</label><br>
+                    <input
+                        type="password"
+                        id="senha"
+                        placeholder="Digite sua senha"
+                        required
+                    >
 
-    <button id="btnlogin" class="btn-login">Enviar</button>
-    <div id="loginMensagem" class="cadMensagem"></div>
+                    <br><br>
+
+                    <button
+                        type="submit"
+                        id="btnlogin"
+                        class="btn-login"
+                    >
+                        Entrar
+                    </button>
+
+                    <div
+                        id="loginMensagem"
+                        class="cadMensagem"
+                        role="status"
+                        aria-live="polite"
+                    ></div>
 
                 </form>
 
-                <!-- Resposta do servidor -->
-                <div id="resposta"></div>
-
             </article>
-
         </section>
-
     </main>
 
-    <!-- Rodapé -->
     <footer>
-        <p>
-            &copy; 2026 Gustavo Gonçalves Vieira. Todos os direitos reservados.
-        </p>
+        <p>&copy; 2026 Gustavo Gonçalves Vieira. Todos os direitos reservados.</p>
     </footer>
 
     <script>
-        
-const btnLogin = document.querySelector('#btnLogin');
-const campoEmail = document.querySelector('#email');
-const campoSenha = document.querySelector('#senha');
-const loginMensagem = document.querySelector('#loginMensagem');
+        const formularioLogin = document.querySelector('#formulario-login');
+        const campoEmail = document.querySelector('#email');
+        const campoSenha = document.querySelector('#senha');
+        const btnLogin = document.querySelector('#btnlogin');
+        const loginMensagem = document.querySelector('#loginMensagem');
 
-btnLogin.addEventListener('click', async (evento) => {
-    evento.preventDefault();
+        formularioLogin.addEventListener('submit', async (evento) => {
+            evento.preventDefault();
 
-    const email = campoEmail.value.trim();
-    const senha = campoSenha.value;
+            const email = campoEmail.value.trim();
+            const senha = campoSenha.value;
 
-    if (!email || !senha) {
-        loginMensagem.textContent = 'Preencha todos os campos!';
-        return;
-    }
+            if (!email || !senha) {
+                loginMensagem.textContent = 'Preencha todos os campos!';
+                return;
+            }
 
-    btnLogin.disabled = true;
-    loginMensagem.textContent = 'Verificando seus dados...';
+            btnLogin.disabled = true;
+            loginMensagem.textContent = 'Verificando seus dados...';
 
-    try {
-        const resposta = await fetch('/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email, senha })
+            try {
+                const resposta = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        senha: senha
+                    })
+                });
+
+                const dados = await resposta.json();
+
+                if (!resposta.ok) {
+                    loginMensagem.textContent =
+                        dados.erro || 'E-mail ou senha incorretos.';
+                    return;
+                }
+
+                // Guarda o nome recebido do servidor.
+                localStorage.setItem('usuario', dados.usuario);
+
+                loginMensagem.textContent =
+                    'Login realizado com sucesso! Entrando no chat...';
+
+                // Redireciona para o chat após o login bem-sucedido.
+                window.location.href = '/chat.html';
+
+            } catch (erro) {
+                console.error('Erro no login:', erro);
+
+                loginMensagem.textContent =
+                    'Não foi possível conectar ao servidor. Tente novamente.';
+            } finally {
+                btnLogin.disabled = false;
+            }
         });
-
-        const dados = await resposta.json();
-
-        if (!resposta.ok) {
-            loginMensagem.textContent =
-                dados.erro || 'E-mail ou senha incorretos.';
-            return;
-        }
-
-       
-        localStorage.setItem('usuario', dados.usuario);
-
-        loginMensagem.textContent = 'Login realizado! Entrando no chat...';
-
-        
-        window.location.href = '/chat.html';
-
-    } catch (erro) {
-        console.error('Erro no login:', erro);
-        loginMensagem.textContent =
-            'Não foi possível conectar ao servidor.';
-    } finally {
-        btnLogin.disabled = false;
-    }
-});
-
-
-       
     </script>
 
+<!-- Aviso para acessar o chat -->
+<div id="avisoChat" class="aviso-chat" role="dialog"
+     aria-modal="true" aria-labelledby="tituloAvisoChat"
+     aria-describedby="textoAvisoChat" hidden>
+
+    <div class="conteudo-aviso-chat">
+        <h2 id="tituloAvisoChat">Um momento, aventureiro!</h2>
+
+        <p id="textoAvisoChat">
+            É necessário ter uma conta para acessar o chat.
+            Quer fazer o cadastro?
+        </p>
+
+        <div class="botoes-aviso-chat">
+            <button type="button" id="btnSimChat">
+                Sim, fazer cadastro
+            </button>
+
+            <button type="button" id="btnNaoChat">
+                Não, continuar navegando
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const avisoChat = document.querySelector('#avisoChat');
+    const btnSimChat = document.querySelector('#btnSimChat');
+    const btnNaoChat = document.querySelector('#btnNaoChat');
+
+    document.querySelectorAll('.abrir-aviso-chat').forEach(link => {
+        link.addEventListener('click', evento => {
+            evento.preventDefault();
+            avisoChat.hidden = false;
+            btnSimChat.focus();
+        });
+    });
+
+    btnSimChat.addEventListener('click', () => {
+        window.location.href = 'cadastro.html';
+    });
+
+    btnNaoChat.addEventListener('click', () => {
+        avisoChat.hidden = true;
+    });
+
+    avisoChat.addEventListener('click', evento => {
+        if (evento.target === avisoChat) {
+            avisoChat.hidden = true;
+        }
+    });
+
+    document.addEventListener('keydown', evento => {
+        if (evento.key === 'Escape' && !avisoChat.hidden) {
+            avisoChat.hidden = true;
+        }
+    });
+</script>
 
 
 </body>
 </html>
-

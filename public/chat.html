@@ -46,7 +46,12 @@
 
 <script>
    
-const usuarioLogado = localStorage.getItem('usuario') || 'Aventureiro';
+// Verificação básica para evitar abrir o chat sem login.
+const usuarioLogado = localStorage.getItem('usuario');
+
+if (!usuarioLogado) {
+    window.location.replace('index.html');
+}
 
 const boasVindas = document.querySelector('#boasVindas');
 const caixaChat = document.querySelector('#caixaChat');

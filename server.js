@@ -107,6 +107,7 @@ app.post('/chat', async (req, res) => {
                     Responda de maneira natural, amigável e coerente
                     com as mensagens anteriores.
                     Não afirme ser uma pessoa real.
+                    responda as perguntas de forma objetiva,direta e curta.
                 `
             },
 
